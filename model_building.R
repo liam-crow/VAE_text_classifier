@@ -11,7 +11,7 @@ library(tensorflow)
 library(tm)
 library(dplyr)
 cat_clean_tags <- googlesheets4::read_sheet("1ZbnspgZDgNn_0NsHLCqtxVDMEdt4dkPNk_Dwv7xQfgA","category_clean_data") %>% 
-  mutate(semantic_tag_category = if_else(semantic_tag_category %in% top_cat, semantic_tag_category , NA_character_)) %>% drop_na()
+  mutate(semantic_tag_category = if_else(semantic_tag_category %in% top_cat, semantic_tag_category, NA_character_)) %>% drop_na()
 
 # cat_clean_tags %>% distinct(semantic_tag_category) %>% pull() # there are 37 categories
 # cat_clean_tags %>% distinct(words) %>% pull() %>% length()# for 5186 words
@@ -20,7 +20,7 @@ cat_clean_tags <- googlesheets4::read_sheet("1ZbnspgZDgNn_0NsHLCqtxVDMEdt4dkPNk_
 
 # get words with 1 category
 tag_ids <- cat_clean_tags %>% 
-  mutate(semantic_tag_category = if_else(semantic_tag_category %in% top_cat, semantic_tag_category ,NA_character_)) %>% 
+  mutate(semantic_tag_category = if_else(semantic_tag_category %in% top_cat, semantic_tag_category, NA_character_)) %>% 
   distinct(semantic_tag_category) %>% 
   mutate(tag_id = row_number())
 
