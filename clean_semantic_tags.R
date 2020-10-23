@@ -24,7 +24,10 @@ sem_tags_clean <- sem_tags %>%
 cat_sem_tags <- sem_tags_clean %>% 
     mutate(semantic_tag_category = gsub('[A-Z]{2}:[0-9]{2}? ', '', semantic_tag)) %>% 
     mutate(semantic_tag_category = gsub(':(.*)', '', semantic_tag_category)) %>% 
-    select(semantic_tag_category, words) %>% distinct() #distinct removes about 700 responses
-    
+    mutate(stem_words = stemDocument(words, language = 'english')) %>% 
+    select(semantic_tag_category, words, stem_words) %>% distinct() #distinct removes about 700 responses
+
+# cat_sem_tags %>% filter(words != stem_words) %>% View()
+
 googlesheets4::write_sheet(cat_sem_tags, "1ZbnspgZDgNn_0NsHLCqtxVDMEdt4dkPNk_Dwv7xQfgA", "category_clean_data")
 googlesheets4::write_sheet(sem_tags_clean, "1ZbnspgZDgNn_0NsHLCqtxVDMEdt4dkPNk_Dwv7xQfgA", "subcategory_clean_data")
